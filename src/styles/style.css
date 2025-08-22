@@ -1,22 +1,25 @@
 /* --- ROOT VARIABLES --- */
  :root {
-  --bg-color: #1a1a1a; /* Latar belakang tetap gelap */
-  --card-bg-color: rgba(50, 30, 30, 0.4); /* Nuansa merah gelap transparan */
-  --primary-color: #ff7f50; /* Warna aksen oranye kemerahan */
-  --glow-color: rgba(255, 127, 80, 0.5);
+  --bg-color: #1a1a1a;
+  /* WARNA ORANYE DIGANTI DENGAN BIRU */
+  --card-bg-color: rgba(0, 100, 150, 0.2); 
+  --primary-color: #00BFFF; /* DeepSkyBlue */
+  --glow-color: rgba(0, 191, 255, 0.5);
   --text-primary: #e0e0e0;
   --text-secondary: #a0a0c0;
   --border-color: rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
  }
 /* --- CANVAS BACKGROUND --- */
-#particle-canvas {
+#dots-canvas {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
-  /* Pastikan tidak ada properti filter: blur di sini */
+  filter: blur(1.5px);
+  opacity: 0.5;
 }
 /* --- GENERAL STYLING --- */
 body {
@@ -37,18 +40,34 @@ body {
   z-index: 1;
 }
 
-/* --- NAVBAR --- */
+/* =================================================== */
+/* --- NAVBAR DENGAN EFEK "SHRINK ON SCROLL" --- */
+/* =================================================== */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(15, 15, 26, 0.5);
+  z-index: 100;
+  
+  /* Tampilan Awal (Besar & Lebih Transparan) */
+  padding: 25px 0;
+  background: rgba(15, 15, 26, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-bottom: 1px solid transparent; /* Border dibuat transparan */
+
+  /* Transisi agar perubahan terasa mulus */
+  transition: padding 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Tampilan Setelah di-scroll (Mengecil & Lebih Solid) */
+.navbar.scrolled {
+  padding: 15px 0;
+  background: rgba(15, 15, 26, 0.8);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 15px 0;
-  z-index: 100;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom-color: var(--border-color); /* Munculkan border */
 }
 
 .nav-container {
@@ -158,9 +177,11 @@ body {
 }
 
 .btn-secondary:hover {
-    background: var(--primary-color);
-    color: #000;
-    box-shadow: 0 0 15px var(--glow-color);
+    /* Sedikit cerahkan warna latar belakang saat di-hover */
+    background: rgba(255, 127, 80, 0.1); 
+    color: var(--primary-color);
+    /* Perkuat efek glow-nya */
+    box-shadow: 0 0 20px var(--glow-color);
 }
 
 
@@ -179,20 +200,20 @@ h2 {
 
 .skill-card,
 .job-card {
-  background: var(--card-bg-color);
+  background: #242933; /* Warna solid, tidak transparan */
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 25px;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  will-change: transform;
+  /* HAPUS backdrop-filter */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform, box-shadow;
+  box-shadow: var(--card-shadow); /* Terapkan shadow */
 }
 
 .skill-card:hover,
 .job-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px var(--glow-color);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow-color);
   border-color: var(--primary-color);
 }
 
@@ -239,8 +260,516 @@ h2 {
 }
 
 /* --- ON-SCROLL ANIMATION --- */
-.hidden {
+/* Kelas dasar untuk elemen yang akan dianimasikan. 
+   Di sinilah durasi transisi seharusnya berada. */
+.animated-section {
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  will-change: opacity, transform; /* Optimasi untuk browser */
+}
+
+/* Kondisi awal saat elemen disembunyikan */
+.animated-section.hidden {
   opacity: 0;
-  transform: translateY(25px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+/* Kondisi awal untuk elemen yang akan muncul dari kiri */
+.animated-section.hidden.slide-in-left {
+  transform: translateX(-50px);
+}
+
+/* Kondisi awal untuk elemen yang akan muncul dari kanan */
+.animated-section.hidden.slide-in-right {
+  transform: translateX(50px);
+}
+
+/* =================================================== */
+/* --- STYLE UNTUK KONTEN BLOG --- */
+/* =================================================== */
+
+.featured-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  border: 1px solid var(--border-color);
+}
+
+/* This rule now only applies to the main H1 title */
+.post-content h1 {
+  text-align: left;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  color: var(--primary-color); /* Keeps the main title blue */
+  font-size: 2.5rem;
+}
+
+/* This new rule makes all other headings (H2, H3, H4) white */
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  text-align: left;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  color: var(--text-primary); /* Changed to primary text color (white) */
+}
+
+.post-content h2 {
+  font-size: 2rem;
+}
+
+.post-content h3 {
+  font-size: 1.5rem;
+}
+
+.post-content p {
+  line-height: 1.8;
+  margin-bottom: 1.5em;
+  color: var(--text-primary);
+}
+
+.post-content blockquote {
+  border-left: 4px solid var(--primary-color);
+  margin-left: 0;
+  margin-right: 0;
+  padding: 15px 25px;
+  background-color: rgba(0, 191, 255, 0.05);
+  color: var(--text-primary);
+  font-style: italic;
+  border-radius: 0 8px 8px 0;
+  font-size: 1.1em;
+}
+
+.post-content blockquote p {
+  margin-bottom: 0;
+}
+
+.post-content p code {
+  background-color: var(--card-bg-color);
+  color: var(--primary-color);
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border: 1px solid var(--border-color);
+}
+
+.post-content th,
+.post-content td {
+  border: 1px solid var(--border-color);
+  padding: 12px 15px;
+  text-align: left;
+}
+
+/* This rule changes the table header to a bold white color */
+.post-content th {
+  background-color: transparent; /* Removed the blue background */
+  font-weight: bold;
+  color: var(--text-primary); /* Changed to primary text color (white) */
+}
+
+.post-content tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.post-content pre {
+  background-color: #282c34;
+  color: #abb2bf;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  line-height: 1.6;
+}
+
+.post-content pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border: none;
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+/* =================================================== */
+/* --- STYLE UNTUK TABEL DALAM KONTEN BLOG --- */
+/* =================================================== */
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse; /* Menghilangkan spasi antar sel */
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border: 1px solid var(--border-color);
+}
+
+
+.post-content th {
+  background-color: var(--text-primary); 
+  font-weight: bold;
+  color: #1a1a1a; 
+  border: 1px solid #1a1a1a;
+}
+
+.post-content th a {
+    color: inherit; 
+    text-decoration: none;
+}
+
+/* Beri warna latar belakang berbeda untuk baris ganjil (opsional, tapi bagus) */
+.post-content tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* =================================================== */
+/* --- STYLE UNTUK BLOK KODE (SHIKI) --- */
+/* =================================================== */
+
+.post-content pre {
+  background-color: #282c34; /* Latar belakang gelap seperti di VS Code */
+  color: #abb2bf;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto; /* Tambahkan scroll horizontal jika kode terlalu panjang */
+  border: 1px solid var(--border-color);
+  line-height: 1.6;
+}
+
+.post-content pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border: none;
+  font-family: 'Fira Code', 'JetBrains Mono', monospace; /* Font khusus untuk coding */
+}
+
+/* Warna-warna ini adalah bagian dari syntax highlighting Shiki. */
+/* Anda bisa menyesuaikannya jika ingin tema warna yang berbeda. */
+.shiki .line {
+  display: block;
+}
+
+.shiki span.token.keyword { color: #C678DD; }
+.shiki span.token.function { color: #61AFEF; }
+.shiki span.token.string { color: #98C379; }
+.shiki span.token.number { color: #D19A66; }
+.shiki span.token.comment { color: #5C6370; font-style: italic; }
+.shiki span.token.punctuation { color: #ABB2BF; }
+
+/* =================================================== */
+/* --- STYLE UNTUK PARAGRAF & QUOTE --- */
+/* =================================================== */
+
+/* Kembalikan warna paragraf ke warna teks utama (putih) */
+.post-content p {
+  line-height: 1.8;
+  margin-bottom: 1.5em;
+  color: var(--text-primary); /* Diubah dari --text-secondary */
+}
+
+/* Styling untuk blockquote */
+.post-content blockquote {
+  border-left: 4px solid var(--primary-color);
+  margin-left: 0;
+  margin-right: 0;
+  padding: 15px 25px;
+  background-color: rgba(255, 127, 80, 0.05);
+  color: var(--text-primary);
+  font-style: italic;
+  border-radius: 0 8px 8px 0;
+  font-size: 1.1em; /* Tambahkan ini untuk memperbesar ukuran font */
+}
+
+/* Atur jarak quote dari paragraf di atasnya */
+.post-content blockquote p {
+  margin-bottom: 0;
+}
+
+/* Styling untuk teks yang diberi format `code` di dalam paragraf */
+.post-content p code {
+  background-color: var(--card-bg-color);
+  color: var(--primary-color);
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* =================================================== */
+/* --- PERBAIKAN JARAK PADA HALAMAN BLOG --- */
+/* =================================================== */
+
+.blog-page .hero-section {
+  margin-bottom: 80px;
+}
+
+/* =================================================== */
+/* --- ANIMASI TRANSISI HALAMAN (VIEW TRANSITIONS) --- */
+/* =================================================== */
+
+/* Definisikan keyframes untuk animasi fade-in dan fade-out */
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+
+/* Terapkan animasi saat halaman baru masuk */
+::view-transition-new(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
+}
+
+/* Terapkan animasi saat halaman lama keluar */
+::view-transition-old(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
+}
+
+/* =================================================== */
+/* --- PERBAIKAN WARNA TEKS EXPERIENCE --- */
+/* =================================================== */
+
+.job-card ul,
+.job-card .job-meta {
+  color: var(--text-primary); /* Mengubah warna menjadi putih */
+}
+
+/* =================================================== */
+/* --- FOOTER --- */
+/* =================================================== */
+
+.site-footer {
+  padding: 40px 20px;
+  background-color: #111; /* Sedikit lebih gelap dari background utama */
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-secondary);
+  position: relative;
+  z-index: 10;
+}
+
+.footer-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.footer-socials {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.footer-socials a {
+  color: var(--text-secondary);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-socials a:hover {
+  color: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+.footer-copyright {
+  font-size: 0.9em;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 45px;
+  height: 45px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  
+  /* Sembunyikan tombol secara default */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  
+  transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+}
+
+/* Tampilkan tombol saat class "visible" ditambahkan oleh JS */
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  filter: brightness(1.2);
+}
+
+/* =================================================== */
+/* --- SECTION CORE COMPETENCIES --- */
+/* =================================================== */
+
+.competencies-section {
+  margin-bottom: 100px;
+}
+
+.competencies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Creates a 2-column grid */
+  gap: 25px;
+  max-width: 800px; /* Optional: Sets a max-width for the grid */
+  margin: 0 auto; /* Optional: Centers the grid */
+}
+
+.competency-card {
+  background: #242933; /* Warna solid, tidak transparan */
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform, box-shadow;
+  box-shadow: var(--card-shadow); /* Terapkan shadow */
+}
+
+.competency-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px var(--glow-color);
+  border-color: var(--primary-color);
+}
+
+.competency-icon {
+  margin-bottom: 20px;
+}
+
+.competency-icon svg {
+  width: 48px;
+  height: 48px;
+  color: var(--primary-color);
+  stroke-width: 1.5;
+}
+
+.competency-card h3 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--text-primary);
+}
+
+.competency-card p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+} 
+
+/* =================================================== */
+/* --- SECTION STREAMER & CALL TO ACTION --- */
+/* =================================================== */
+
+.streamer-section {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #242933;
+  border-radius: 12px;
+  margin-bottom: 100px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+}
+
+.streamer-section h2 {
+  margin-bottom: 20px;
+}
+
+.streamer-section p {
+  max-width: 600px;
+  margin: 0 auto 30px auto;
+  color: var(--text-secondary);
+}
+
+.cta-section {
+  margin-bottom: 50px;
+}
+
+.cta-card {
+  background: var(--primary-color);
+  color: #1a1a1a;
+  padding: 50px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 30px var(--glow-color);
+}
+
+.cta-card h3 {
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+/* Mengubah style tombol di dalam CTA card agar kontras */
+.cta-card .btn-primary {
+    background-color: #fff;
+    color: #1a1a1a;
+    font-weight: bold;
+}
+
+.cta-card .btn-primary:hover {
+    background-color: #242933;
+    color: #fff;
+    border-color: #fff;
+}
+
+  /* =================================================== */
+  /* --- CONTAINER VIDEO YOUTUBE --- */
+  /* =================================================== */
+
+  .video-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* Aspect Ratio 16:9 */
+    margin-bottom: 40px;
+    border-radius: 12px;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+/* =================================================== */
+/* --- STYLE UNTUK KARTU TAUTAN BLOG --- */
+/* =================================================== */
+
+.post-link-card {
+  display: block;
+  text-decoration: none;
+  margin-bottom: 20px;
+  padding: 25px;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform, box-shadow;
+
+  /* Terapkan style yang sama dengan kartu lain */
+  background: #242933; /* Warna solid */
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow); /* Drop shadow konsisten */
+}
+
+.post-link-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow-color);
+  border-color: var(--primary-color);
 }

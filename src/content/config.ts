@@ -5,8 +5,10 @@ const blogCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     author: z.string(),
-    date: z.string().transform((str) => new Date(str)), // Mengubah string tanggal menjadi objek Tanggal JavaScript
-    // Anda bisa menambahkan item lain di sini jika perlu, misalnya: description: z.string(),
+    date: z.string().transform((str) => new Date(str)),
+    // Menambahkan .optional() membuat properti ini tidak wajib
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
   }),
 });
 
