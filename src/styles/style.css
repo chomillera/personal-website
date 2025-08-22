@@ -342,6 +342,7 @@ h2 {
 }
 
 .post-content blockquote p {
+  margin-top: 0;
   margin-bottom: 0;
 }
 
@@ -674,37 +675,92 @@ h2 {
 /* --- SECTION STREAMER & CALL TO ACTION --- */
 /* =================================================== */
 
-.streamer-section {
-  text-align: center;
-  padding: 60px 20px;
-  background-color: #242933;
+.streamer-section-gaming {
   border-radius: 12px;
+  border: 1px solid var(--primary-color);
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%), 
+              url('/blog-picture/gaming-pattern.svg'); /* Latar belakang berpola (opsional) */
+  background-size: cover;
+  padding: 40px;
   margin-bottom: 100px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--card-shadow);
+  box-shadow: 0 0 30px rgba(0, 191, 255, 0.2);
 }
 
-.streamer-section h2 {
-  margin-bottom: 20px;
+.streamer-content {
+  display: flex;
+  align-items: center;
+  gap: 25px;
 }
 
-.streamer-section p {
-  max-width: 600px;
-  margin: 0 auto 30px auto;
+.streamer-icon svg {
+  width: 40px;
+  height: 40px;
+  color: var(--primary-color);
+  opacity: 0.8;
+}
+
+.streamer-text {
+  flex-grow: 1; /* Membuat teks mengisi ruang yang tersedia */
+}
+
+.streamer-text h3 {
+  font-family: 'Orbitron', sans-serif; /* Font nuansa gaming */
+  font-size: 1.8rem;
+  margin: 0 0 5px 0;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.streamer-text p {
+  margin: 0;
   color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.streamer-button {
+  display: inline-block;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 10px 25px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px var(--glow-color);
+}
+
+.streamer-button:hover {
+  background: var(--primary-color);
+  color: #fff;
+  box-shadow: 0 0 25px var(--glow-color);
+  transform: scale(1.05);
+}
+
+/* Penyesuaian untuk tampilan mobile */
+@media (max-width: 768px) {
+  .streamer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
 }
 
 .cta-section {
   margin-bottom: 50px;
 }
 
+/* --- PERBAIKAN CTA CARD --- */
 .cta-card {
-  background: var(--primary-color);
-  color: #1a1a1a;
+  /* Menggunakan gradien biru yang elegan */
+  background: linear-gradient(45deg, #003973, #005f9e);
+  color: var(--text-primary); /* Ubah warna teks menjadi putih */
   padding: 50px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 30px var(--glow-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 40px var(--glow-color);
 }
 
 .cta-card h3 {
@@ -716,14 +772,19 @@ h2 {
 /* Mengubah style tombol di dalam CTA card agar kontras */
 .cta-card .btn-primary {
     background-color: #fff;
-    color: #1a1a1a;
+    color: #003973; /* Sesuaikan warna teks dengan gradien */
     font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* --- EFEK HOVER BARU UNTUK TOMBOL CTA --- */
 .cta-card .btn-primary:hover {
-    background-color: #242933;
-    color: #fff;
-    border-color: #fff;
+    background-color: #fff;
+    color: #005f9e;
+    /* Efek angkat (lift) dan glow */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 191, 255, 0.4);
+    border-color: transparent;
 }
 
   /* =================================================== */

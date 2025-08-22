@@ -15,10 +15,11 @@ const allPosts = (await getCollection('blog')).sort(
 
     <section>
       {allPosts.map(post => (
-        <a href={`/blog/${post.slug}`} class="post-link-card" style="display:block; text-decoration:none; margin-bottom:20px; background:var(--card-bg-color); padding:25px; border-radius:12px; border: 1px solid var(--border-color); transition: all 0.3s ease;">
+        // ATRIBUT STYLE SUDAH DIHAPUS DARI SINI
+        <a href={`/blog/${post.slug}`} class="post-link-card">
           <h3 style="color:var(--primary-color); margin-top:0; font-size: 1.5rem;">{post.data.title}</h3>
-          <p style="color:var(--text-secondary); margin-bottom: 0;">By: 
-          {post.data.author} - {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p style="color:var(--text-secondary); margin-bottom: 0;">Oleh: 
+          {post.data.author} - {post.data.date.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
         </a>
       ))}
     </section>
