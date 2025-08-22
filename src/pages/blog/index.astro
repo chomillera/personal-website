@@ -18,8 +18,8 @@ const allPosts = (await getCollection('blog')).sort(
         // ATRIBUT STYLE SUDAH DIHAPUS DARI SINI
         <a href={`/blog/${post.slug}`} class="post-link-card">
           <h3 style="color:var(--primary-color); margin-top:0; font-size: 1.5rem;">{post.data.title}</h3>
-          <p style="color:var(--text-secondary); margin-bottom: 0;">Oleh: 
-          {post.data.author} - {post.data.date.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p style="color:var(--text-secondary); margin-bottom: 0;">By: 
+          {post.data.author} - {post.data.date.toLocaleDateString('en-EN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
         </a>
       ))}
     </section>

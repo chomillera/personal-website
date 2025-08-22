@@ -704,12 +704,13 @@ h2 {
 }
 
 .streamer-text h3 {
-  font-family: 'Orbitron', sans-serif; /* Font nuansa gaming */
-  font-size: 1.8rem;
-  margin: 0 0 5px 0;
+  /* Properti di bawah ini telah diubah atau dihapus */
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Menyamakan dengan font utama */
+  font-size: 2rem; /* Menyamakan ukuran dengan heading lain */
+  margin: 0 0 15px 0; /* Menyamakan margin */
   color: var(--text-primary);
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  text-transform: none; /* Menghapus kapitalisasi */
+  letter-spacing: normal; /* Menghapus spasi antar huruf */
 }
 
 .streamer-text p {

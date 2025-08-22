@@ -16,16 +16,21 @@ type Props = {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+// Ambil semua post, filter post yang sedang aktif, urutkan, dan batasi 3 artikel
+const moreArticles = (await getCollection('blog'))
+  .filter(p => p.slug !== post.slug)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
 ---
 <BaseLayout title={post.data.title} hideBackgroundEffect={true}>
-  {/* UBAH PADDING-TOP MENJADI 120PX */}
   <div class="portfolio-container" style="padding-top: 120px;">
     <article>
       <header class="hero-section" style="margin-bottom: 0;">
         <h1 style="font-size: 2.8rem;">{post.data.title}</h1>
         <p style="color:var(--text-secondary); margin-top: 10px;">
-            Oleh: {post.data.author} |
-            Diterbitkan pada: {post.data.date.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}
+            By: {post.data.author} |
+            Published Date: {post.data.date.toLocaleDateString('en-EN', { year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
       </header>
       
@@ -36,7 +41,31 @@ const { Content } = await post.render();
       <div class="post-content" style="line-height:1.8; color: var(--text-primary);">
         <Content />
       </div>
-
     </article>
+
+    {moreArticles.length > 0 && (
+      <section 
+        class="more-articles" 
+        style="margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--border-color);"
+      >
+        <h2 style="text-align: left; font-size: 1.8rem; margin-top:0; margin-bottom: 30px;">
+          Other Articles
+        </h2>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          {moreArticles.map(otherPost => (
+            <li style="margin-bottom: 25px;">
+              <a href={`/blog/${otherPost.slug}`} style="text-decoration: none; color: var(--primary-color);">
+                <h3 style="margin: 0 0 8px 0; font-size: 1.2rem; font-weight: 600; line-height: 1.4;">
+                  {otherPost.data.title}
+                </h3>
+              </a>
+              <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">
+                {otherPost.data.date.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
   </div>
 </BaseLayout>
