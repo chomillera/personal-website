@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Mengambil semua postingan dari koleksi 'blog' dan mengurutkannya dari yang terbaru
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+<BaseLayout title="Blog">
+  <div class="portfolio-container" style="padding-top: 50px;">
+    <header class="hero-section" style="margin-bottom: 60px;">
+      <h1>Blog</h1>
+      <p class="summary">Pemikiran tentang teknologi, manajemen, dan pengembangan diri.</p>
+    </header>
+
+    <section>
+      {allPosts.map(post => (
+        <a href={`/blog/${post.slug}`} class="post-link-card" style="display:block; text-decoration:none; margin-bottom:20px; background:var(--card-bg-color); padding:25px; border-radius:12px; border: 1px solid var(--border-color); transition: all 0.3s ease;">
+          <h3 style="color:var(--primary-color); margin-top:0; font-size: 1.5rem;">{post.data.title}</h3>
+          <p style="color:var(--text-secondary); margin-bottom: 0;">Oleh: {post.data.author} - {post.data.date.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+        </a>
+      ))}
+    </section>
+  </div>
+</BaseLayout>

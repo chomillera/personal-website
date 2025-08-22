@@ -1,19 +1,11 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Faisal Sugangga - Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <canvas id="particle-canvas"></canvas>
-
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Faisal Sugangga - Portfolio">
   <div class="portfolio-container">
     <header class="hero-section">
       <img
-        src="/faisal-sugangga.jpg
-        "
+        src="/faisal-sugangga.jpg"
         alt="Foto Faisal Sugangga"
         class="profile-picture"
       />
@@ -63,7 +55,4 @@
       </div>
     </section>
   </div>
-
-  <script type="module" src="/main.js"></script>
-</body>
-</html>
+</BaseLayout>

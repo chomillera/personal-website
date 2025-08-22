@@ -1,0 +1,246 @@
+/* --- ROOT VARIABLES --- */
+ :root {
+  --bg-color: #1a1a1a; /* Latar belakang tetap gelap */
+  --card-bg-color: rgba(50, 30, 30, 0.4); /* Nuansa merah gelap transparan */
+  --primary-color: #ff7f50; /* Warna aksen oranye kemerahan */
+  --glow-color: rgba(255, 127, 80, 0.5);
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0c0;
+  --border-color: rgba(255, 255, 255, 0.1);
+ }
+/* --- CANVAS BACKGROUND --- */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  /* Pastikan tidak ada properti filter: blur di sini */
+}
+/* --- GENERAL STYLING --- */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  margin: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.portfolio-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 120px 20px 50px; /* Menambah padding atas untuk navbar */
+  position: relative;
+  z-index: 1;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(15, 15, 26, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 15px 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+}
+
+
+/* --- HERO SECTION --- */
+.hero-section {
+  text-align: center;
+  margin-bottom: 120px;
+}
+
+.profile-picture {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 4px solid var(--primary-color);
+  object-fit: cover;
+  box-shadow: 0 0 25px var(--glow-color);
+  margin-bottom: 25px;
+  transition: transform 0.4s ease;
+}
+
+.profile-picture:hover {
+  transform: scale(1.05);
+}
+
+.hero-text h1 {
+  font-size: 3.5rem;
+  margin: 0;
+  color: #fff;
+}
+
+.hero-text h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--primary-color);
+  margin: 10px 0 20px 0;
+}
+
+.hero-text .summary {
+  max-width: 650px;
+  margin: 0 auto 35px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.btn {
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  margin: 0 10px;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: #000;
+}
+
+.btn-primary:hover {
+  background: transparent;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  box-shadow: 0 0 15px var(--glow-color);
+}
+
+.btn-secondary {
+    background: transparent;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: #000;
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+
+/* --- CARDS (SKILLS & EXPERIENCE) --- */
+.skills-section,
+.experience-section {
+  margin-bottom: 100px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 50px;
+  color: #fff;
+}
+
+.skill-card,
+.job-card {
+  background: var(--card-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 25px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+
+.skill-card:hover,
+.job-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px var(--glow-color);
+  border-color: var(--primary-color);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.skill-card {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+
+.job-card {
+  margin-bottom: 25px;
+}
+
+.job-card:last-child {
+  margin-bottom: 0;
+}
+
+.job-card h4 {
+  font-size: 1.4rem;
+  margin: 0 0 5px 0;
+  color: var(--primary-color);
+}
+
+.job-card .job-meta {
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.job-card ul {
+  padding-left: 20px;
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.job-card li {
+  margin-bottom: 8px;
+}
+
+/* --- ON-SCROLL ANIMATION --- */
+.hidden {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}

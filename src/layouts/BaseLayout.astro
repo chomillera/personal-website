@@ -1,0 +1,41 @@
+---
+// Impor file CSS global kita
+import '~/styles/style.css'; // Menggunakan alias '~' juga merupakan praktik yang baik di sini
+
+// Menerima 'title' untuk setiap halaman
+interface Props {
+	title: string;
+}
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+        <canvas id="particle-canvas"></canvas>
+
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="nav-logo">FS</a>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+
+		<slot />
+
+        <script>
+            import "~/scripts/main.js";
+        </script>
+	</body>
+</html>
