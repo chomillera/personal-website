@@ -1,5 +1,5 @@
 ---
-title: "Mengenal Teknologi AI"
+title: "Mengenal Teknologi AI [Dummy]"
 author: "Faisal Sugangga"
 date: "2025-09-10"
 image: "/blog-picture/imej_5ccfe917a8b765ccfef83b7420.webp"
