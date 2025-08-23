@@ -25,6 +25,7 @@ const { title, hideBackgroundEffect = false } = Astro.props;
         <nav class="navbar">
             <div class="nav-container">
                 <a href="/" class="nav-logo">Faisal Sugangga</a>
+            
                 <ul class="nav-menu">
                     <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
                     <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
@@ -51,9 +52,9 @@ const { title, hideBackgroundEffect = false } = Astro.props;
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                     </a>
                     <a href="https://github.com/chomillera" target="_blank" rel="noopener" aria-label="GitHub">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                     </a>
-                </div>
+                 </div>
                  <div class="footer-copyright">
                     &copy; {new Date().getFullYear()} Faisal Sugangga. All Rights Reserved.
                 </div>
@@ -63,11 +64,100 @@ const { title, hideBackgroundEffect = false } = Astro.props;
             </a>
         </footer>
 
-        <script src="/src/styles/main.js"></script>
-        
         <script is:inline>
-            function setupPageScripts() {
-                // Navbar scroll effect
+            function initializeAllScripts() {
+                // ===================================================================================
+                // BAGIAN 1: EFEK PARTIKEL LATAR BELAKANG (dari main.js)
+                // ===================================================================================
+                const canvas = document.getElementById('dots-canvas');
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    let particlesArray;
+                    const mouse = { x: null, y: null, radius: (canvas.height / 80) * (canvas.width / 80) };
+                    window.addEventListener('mousemove', function(event) { mouse.x = event.clientX; mouse.y = event.clientY; });
+                    window.addEventListener('mouseout', function() { mouse.x = undefined; mouse.y = undefined; });
+                    class Particle {
+                        constructor(x, y, directionX, directionY, size, color) { this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.originalSize = size; this.color = color; }
+                        draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); }
+                        update() {
+                            if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
+                            if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
+                            let dx = mouse.x - this.x; let dy = mouse.y - this.y; let distance = Math.sqrt(dx * dx + dy * dy);
+                            if (distance < mouse.radius) { if (this.size < 5) { this.size += 0.2; } } 
+                            else if (this.size > this.originalSize) { this.size -= 0.1; }
+                            if (this.size < this.originalSize) { this.size = this.originalSize; }
+                            this.x += this.directionX; this.y += this.directionY; this.draw();
+                        }
+                    }
+                    function init() {
+                        particlesArray = [];
+                        let numberOfParticles = (canvas.height * canvas.width) / 15000;
+                        for (let i = 0; i < numberOfParticles; i++) {
+                            let size = (Math.random() * 1.5) + 1; let x = Math.random() * innerWidth; let y = Math.random() * innerHeight;
+                            let directionX = (Math.random() * 0.4) - 0.2; let directionY = (Math.random() * 0.4) - 0.2;
+                            let color = 'rgba(0, 191, 255, 0.3)'; particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+                        }
+                    }
+                    function connect() {
+                        let opacityValue = 1;
+                        for (let a = 0; a < particlesArray.length; a++) {
+                            for (let b = a; b < particlesArray.length; b++) {
+                                let distance = ((particlesArray[a].x - particlesArray[b].x) ** 2) + ((particlesArray[a].y - particlesArray[b].y) ** 2);
+                                if (distance < (canvas.width / 9) * (canvas.height / 9)) {
+                                    opacityValue = 1 - (distance / 20000);
+                                    ctx.strokeStyle = 'rgba(0, 191, 255,' + opacityValue * 0.2 + ')'; ctx.lineWidth = 1;
+                                    ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
+                                }
+                            }
+                        }
+                    }
+                    let animationFrameId;
+                    function animate() {
+                        animationFrameId = requestAnimationFrame(animate); ctx.clearRect(0, 0, innerWidth, innerHeight);
+                        for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); } connect();
+                    }
+                    window.addEventListener('resize', function() { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
+                    init(); if (typeof animationFrameId !== 'undefined') { cancelAnimationFrame(animationFrameId); } animate();
+                }
+
+                // ===================================================================================
+                // BAGIAN 2: LOGIKA ANIMASI ON-SCROLL (dari main.js)
+                // ===================================================================================
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.remove('hidden');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+                const hiddenElements = document.querySelectorAll('.hidden');
+                hiddenElements.forEach((el) => observer.observe(el));
+
+                // ===================================================================================
+                // BAGIAN 3: LOGIKA UNTUK TOMBOL BACK TO TOP (dari main.js)
+                // ===================================================================================
+                const backToTopButton = document.querySelector('.back-to-top');
+                if (backToTopButton) {
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 300) {
+                            backToTopButton.classList.add('visible');
+                        } else {
+                            backToTopButton.classList.remove('visible');
+                        }
+                    });
+
+                    backToTopButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                }
+
+                // ===================================================================================
+                // BAGIAN 4: EFEK SCROLL NAVBAR (dari BaseLayout.astro)
+                // ===================================================================================
                 const navbar = document.querySelector('.navbar');
                 if (navbar) {
                     window.addEventListener('scroll', () => {
@@ -79,7 +169,9 @@ const { title, hideBackgroundEffect = false } = Astro.props;
                     });
                 }
 
-                // Hamburger menu logic
+                // ===================================================================================
+                // BAGIAN 5: LOGIKA HAMBURGER MENU (dari BaseLayout.astro)
+                // ===================================================================================
                 const navToggle = document.querySelector('.nav-toggle');
                 const mobileMenu = document.querySelector('.mobile-menu');
                 if (navToggle && mobileMenu) {
@@ -88,13 +180,25 @@ const { title, hideBackgroundEffect = false } = Astro.props;
                         mobileMenu.classList.toggle('active');
                     });
                 }
+
+                // ===================================================================================
+                // BAGIAN 6: PENANGANAN RESIZE UNTUK MENU MOBILE (Perbaikan)
+                // ===================================================================================
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 768) {
+                        if (mobileMenu && navToggle) {
+                            mobileMenu.classList.remove('active');
+                            navToggle.classList.remove('active');
+                        }
+                    }
+                });
             }
 
-            // Jalankan fungsi saat halaman pertama kali dimuat
-            setupPageScripts();
-
-            // Jalankan kembali fungsi setiap kali Astro selesai melakukan transisi halaman
-            document.addEventListener('astro:page-load', setupPageScripts);
+            // Jalankan semua skrip saat halaman pertama kali dimuat
+            initializeAllScripts();
+            
+            // Jalankan kembali semua skrip setiap kali Astro selesai melakukan transisi halaman
+            document.addEventListener('astro:page-load', initializeAllScripts);
         </script>
 	</body>
 </html>
