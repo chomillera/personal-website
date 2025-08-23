@@ -908,3 +908,43 @@ h2 {
       font-size: 2rem;
   }
 }
+
+/* =================================================== */
+/* --- PENYESUAIAN UNTUK TAMPILAN MOBILE (DI BAWAH 768px) --- */
+/* =================================================== */
+
+@media (max-width: 768px) {
+    .competencies-grid {
+      grid-template-columns: 1fr; /* <- BARIS INI KUNCINYA */
+      max-width: 100%;
+    }
+
+    .portfolio-container {
+      padding-top: 100px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .hero-text h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero-text h2 {
+      font-size: 1.3rem;
+    }
+    
+    .hero-buttons {
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+}
