@@ -1,7 +1,6 @@
 /* --- ROOT VARIABLES --- */
  :root {
   --bg-color: #1a1a1a;
-  /* WARNA ORANYE DIGANTI DENGAN BIRU */
   --card-bg-color: rgba(0, 100, 150, 0.2); 
   --primary-color: #00BFFF; /* DeepSkyBlue */
   --glow-color: rgba(0, 191, 255, 0.5);
@@ -35,39 +34,35 @@ body {
 .portfolio-container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 120px 20px 50px; /* Menambah padding atas untuk navbar */
+  padding: 120px 20px 50px;
   position: relative;
   z-index: 1;
 }
 
 /* =================================================== */
-/* --- NAVBAR DENGAN EFEK "SHRINK ON SCROLL" --- */
+/* --- NAVBAR & MOBILE MENU (KODE GABUNGAN & DIPERBAIKI) --- */
 /* =================================================== */
+
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 100;
-  
-  /* Tampilan Awal (Besar & Lebih Transparan) */
+  z-index: 1000; /* Z-index tinggi agar selalu di atas */
   padding: 25px 0;
   background: rgba(15, 15, 26, 0.3);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border-bottom: 1px solid transparent; /* Border dibuat transparan */
-
-  /* Transisi agar perubahan terasa mulus */
+  border-bottom: 1px solid transparent;
   transition: padding 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Tampilan Setelah di-scroll (Mengecil & Lebih Solid) */
 .navbar.scrolled {
   padding: 15px 0;
   background: rgba(15, 15, 26, 0.8);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom-color: var(--border-color); /* Munculkan border */
+  border-bottom-color: var(--border-color);
 }
 
 .nav-container {
@@ -105,6 +100,75 @@ body {
   color: var(--primary-color);
 }
 
+.nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1001;
+}
+
+.hamburger {
+    display: block;
+    position: relative;
+    width: 25px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger::before { transform: translateY(-8px); }
+.hamburger::after { transform: translateY(8px); }
+
+.nav-toggle.active .hamburger { background: transparent; }
+.nav-toggle.active .hamburger::before { transform: rotate(45deg); }
+.nav-toggle.active .hamburger::after { transform: rotate(-45deg); }
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(26, 26, 26, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    z-index: 999; /* Z-index di bawah navbar tapi di atas konten */
+}
+
+.mobile-menu.active {
+    display: flex;
+}
+
+.mobile-menu .nav-link {
+    padding: 15px 25px;
+    text-align: center;
+    font-size: 1.1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-menu .nav-link:hover {
+    background-color: rgba(0, 191, 255, 0.1);
+    color: var(--primary-color);
+}
 
 /* --- HERO SECTION --- */
 .hero-section {
@@ -177,10 +241,8 @@ body {
 }
 
 .btn-secondary:hover {
-    /* Sedikit cerahkan warna latar belakang saat di-hover */
     background: rgba(255, 127, 80, 0.1); 
     color: var(--primary-color);
-    /* Perkuat efek glow-nya */
     box-shadow: 0 0 20px var(--glow-color);
 }
 
@@ -200,14 +262,13 @@ h2 {
 
 .skill-card,
 .job-card {
-  background: #242933; /* Warna solid, tidak transparan */
+  background: #242933;
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 25px;
-  /* HAPUS backdrop-filter */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   will-change: transform, box-shadow;
-  box-shadow: var(--card-shadow); /* Terapkan shadow */
+  box-shadow: var(--card-shadow);
 }
 
 .skill-card:hover,
@@ -260,24 +321,19 @@ h2 {
 }
 
 /* --- ON-SCROLL ANIMATION --- */
-/* Kelas dasar untuk elemen yang akan dianimasikan. 
-   Di sinilah durasi transisi seharusnya berada. */
 .animated-section {
   transition: opacity 1s ease-out, transform 1s ease-out;
-  will-change: opacity, transform; /* Optimasi untuk browser */
+  will-change: opacity, transform;
 }
 
-/* Kondisi awal saat elemen disembunyikan */
 .animated-section.hidden {
   opacity: 0;
 }
 
-/* Kondisi awal untuk elemen yang akan muncul dari kiri */
 .animated-section.hidden.slide-in-left {
   transform: translateX(-50px);
 }
 
-/* Kondisi awal untuk elemen yang akan muncul dari kanan */
 .animated-section.hidden.slide-in-right {
   transform: translateX(50px);
 }
@@ -296,23 +352,21 @@ h2 {
   border: 1px solid var(--border-color);
 }
 
-/* This rule now only applies to the main H1 title */
 .post-content h1 {
   text-align: left;
   margin-top: 2em;
   margin-bottom: 1em;
-  color: var(--primary-color); /* Keeps the main title blue */
+  color: var(--primary-color);
   font-size: 2.5rem;
 }
 
-/* This new rule makes all other headings (H2, H3, H4) white */
 .post-content h2,
 .post-content h3,
 .post-content h4 {
   text-align: left;
   margin-top: 1em;
   margin-bottom: 1em;
-  color: var(--text-primary); /* Changed to primary text color (white) */
+  color: var(--text-primary);
 }
 
 .post-content h2 {
@@ -369,11 +423,16 @@ h2 {
   text-align: left;
 }
 
-/* This rule changes the table header to a bold white color */
 .post-content th {
-  background-color: transparent; /* Removed the blue background */
+  background-color: var(--text-primary); 
   font-weight: bold;
-  color: var(--text-primary); /* Changed to primary text color (white) */
+  color: #1a1a1a; 
+  border: 1px solid #1a1a1a;
+}
+
+.post-content th a {
+    color: inherit; 
+    text-decoration: none;
 }
 
 .post-content tr:nth-child(even) {
@@ -399,65 +458,15 @@ h2 {
 }
 
 .post-content hr {
-  border: none; /* Menghapus border default */
-  border-top: 1px solid var(--border-color); /* Membuat garis baru yang sesuai tema */
-  margin: 3em auto; /* Memberi jarak atas & bawah yang sama (3em) */
-}
-
-/* =================================================== */
-/* --- STYLE UNTUK TABEL DALAM KONTEN BLOG --- */
-/* =================================================== */
-
-.post-content table {
-  width: 100%;
-  border-collapse: collapse; /* Menghilangkan spasi antar sel */
-  margin-top: 2em;
-  margin-bottom: 2em;
-  border: 1px solid var(--border-color);
-}
-
-
-.post-content th {
-  background-color: var(--text-primary); 
-  font-weight: bold;
-  color: #1a1a1a; 
-  border: 1px solid #1a1a1a;
-}
-
-.post-content th a {
-    color: inherit; 
-    text-decoration: none;
-}
-
-/* Beri warna latar belakang berbeda untuk baris ganjil (opsional, tapi bagus) */
-.post-content tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.02);
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 3em auto;
 }
 
 /* =================================================== */
 /* --- STYLE UNTUK BLOK KODE (SHIKI) --- */
 /* =================================================== */
 
-.post-content pre {
-  background-color: #282c34; /* Latar belakang gelap seperti di VS Code */
-  color: #abb2bf;
-  padding: 20px;
-  border-radius: 8px;
-  overflow-x: auto; /* Tambahkan scroll horizontal jika kode terlalu panjang */
-  border: 1px solid var(--border-color);
-  line-height: 1.6;
-}
-
-.post-content pre code {
-  background-color: transparent;
-  color: inherit;
-  padding: 0;
-  border: none;
-  font-family: 'Fira Code', 'JetBrains Mono', monospace; /* Font khusus untuk coding */
-}
-
-/* Warna-warna ini adalah bagian dari syntax highlighting Shiki. */
-/* Anda bisa menyesuaikannya jika ingin tema warna yang berbeda. */
 .shiki .line {
   display: block;
 }
@@ -468,44 +477,6 @@ h2 {
 .shiki span.token.number { color: #D19A66; }
 .shiki span.token.comment { color: #5C6370; font-style: italic; }
 .shiki span.token.punctuation { color: #ABB2BF; }
-
-/* =================================================== */
-/* --- STYLE UNTUK PARAGRAF & QUOTE --- */
-/* =================================================== */
-
-/* Kembalikan warna paragraf ke warna teks utama (putih) */
-.post-content p {
-  line-height: 1.8;
-  margin-bottom: 1.5em;
-  color: var(--text-primary); /* Diubah dari --text-secondary */
-}
-
-/* Styling untuk blockquote */
-.post-content blockquote {
-  border-left: 4px solid var(--primary-color);
-  margin-left: 0;
-  margin-right: 0;
-  padding: 15px 25px;
-  background-color: rgba(255, 127, 80, 0.05);
-  color: var(--text-primary);
-  font-style: italic;
-  border-radius: 0 8px 8px 0;
-  font-size: 1.1em; /* Tambahkan ini untuk memperbesar ukuran font */
-}
-
-/* Atur jarak quote dari paragraf di atasnya */
-.post-content blockquote p {
-  margin-bottom: 0;
-}
-
-/* Styling untuk teks yang diberi format `code` di dalam paragraf */
-.post-content p code {
-  background-color: var(--card-bg-color);
-  color: var(--primary-color);
-  padding: 3px 6px;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
 
 /* =================================================== */
 /* --- PERBAIKAN JARAK PADA HALAMAN BLOG --- */
@@ -519,7 +490,6 @@ h2 {
 /* --- ANIMASI TRANSISI HALAMAN (VIEW TRANSITIONS) --- */
 /* =================================================== */
 
-/* Definisikan keyframes untuk animasi fade-in dan fade-out */
 @keyframes fade-in {
   from { opacity: 0; }
 }
@@ -528,12 +498,10 @@ h2 {
   to { opacity: 0; }
 }
 
-/* Terapkan animasi saat halaman baru masuk */
 ::view-transition-new(root) {
   animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
 }
 
-/* Terapkan animasi saat halaman lama keluar */
 ::view-transition-old(root) {
   animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
 }
@@ -544,7 +512,7 @@ h2 {
 
 .job-card ul,
 .job-card .job-meta {
-  color: var(--text-primary); /* Mengubah warna menjadi putih */
+  color: var(--text-primary);
 }
 
 /* =================================================== */
@@ -553,7 +521,7 @@ h2 {
 
 .site-footer {
   padding: 40px 20px;
-  background-color: #111; /* Sedikit lebih gelap dari background utama */
+  background-color: #111;
   border-top: 1px solid var(--border-color);
   text-align: center;
   color: var(--text-secondary);
@@ -600,16 +568,12 @@ h2 {
   align-items: center;
   justify-content: center;
   z-index: 100;
-  
-  /* Sembunyikan tombol secara default */
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px);
-  
   transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
 }
 
-/* Tampilkan tombol saat class "visible" ditambahkan oleh JS */
 .back-to-top.visible {
   opacity: 1;
   visibility: visible;
@@ -630,21 +594,21 @@ h2 {
 
 .competencies-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Creates a 2-column grid */
+  grid-template-columns: repeat(2, 1fr);
   gap: 25px;
-  max-width: 800px; /* Optional: Sets a max-width for the grid */
-  margin: 0 auto; /* Optional: Centers the grid */
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .competency-card {
-  background: #242933; /* Warna solid, tidak transparan */
+  background: #242933;
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 30px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   will-change: transform, box-shadow;
-  box-shadow: var(--card-shadow); /* Terapkan shadow */
+  box-shadow: var(--card-shadow);
 }
 
 .competency-card:hover {
@@ -685,7 +649,7 @@ h2 {
   border-radius: 12px;
   border: 1px solid var(--primary-color);
   background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%), 
-              url('/blog-picture/gaming-pattern.svg'); /* Latar belakang berpola (opsional) */
+              url('/blog-picture/gaming-pattern.svg');
   background-size: cover;
   padding: 40px;
   margin-bottom: 100px;
@@ -706,17 +670,16 @@ h2 {
 }
 
 .streamer-text {
-  flex-grow: 1; /* Membuat teks mengisi ruang yang tersedia */
+  flex-grow: 1;
 }
 
 .streamer-text h3 {
-  /* Properti di bawah ini telah diubah atau dihapus */
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Menyamakan dengan font utama */
-  font-size: 2rem; /* Menyamakan ukuran dengan heading lain */
-  margin: 0 0 15px 0; /* Menyamakan margin */
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 2rem;
+  margin: 0 0 15px 0;
   color: var(--text-primary);
-  text-transform: none; /* Menghapus kapitalisasi */
-  letter-spacing: normal; /* Menghapus spasi antar huruf */
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .streamer-text p {
@@ -745,24 +708,13 @@ h2 {
   transform: scale(1.05);
 }
 
-/* Penyesuaian untuk tampilan mobile */
-@media (max-width: 768px) {
-  .streamer-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 30px;
-  }
-}
-
 .cta-section {
   margin-bottom: 50px;
 }
 
-/* --- PERBAIKAN CTA CARD --- */
 .cta-card {
-  /* Menggunakan gradien biru yang elegan */
   background: linear-gradient(45deg, #003973, #005f9e);
-  color: var(--text-primary); /* Ubah warna teks menjadi putih */
+  color: var(--text-primary);
   padding: 50px;
   border-radius: 12px;
   text-align: center;
@@ -776,19 +728,16 @@ h2 {
   margin-bottom: 30px;
 }
 
-/* Mengubah style tombol di dalam CTA card agar kontras */
 .cta-card .btn-primary {
     background-color: #fff;
-    color: #003973; /* Sesuaikan warna teks dengan gradien */
+    color: #003973;
     font-weight: bold;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* --- EFEK HOVER BARU UNTUK TOMBOL CTA --- */
 .cta-card .btn-primary:hover {
     background-color: #fff;
     color: #005f9e;
-    /* Efek angkat (lift) dan glow */
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 191, 255, 0.4);
     border-color: transparent;
@@ -829,11 +778,9 @@ h2 {
   border-radius: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   will-change: transform, box-shadow;
-
-  /* Terapkan style yang sama dengan kartu lain */
-  background: #242933; /* Warna solid */
+  background: #242933;
   border: 1px solid var(--border-color);
-  box-shadow: var(--card-shadow); /* Drop shadow konsisten */
+  box-shadow: var(--card-shadow);
 }
 
 .post-link-card:hover {
@@ -841,79 +788,18 @@ h2 {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow-color);
   border-color: var(--primary-color);
 }
-/* =================================================== */
-/* --- HAMBURGER MENU --- */
-/* =================================================== */
-.nav-toggle {
-    display: none;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1001;
-}
-.hamburger {
-    display: block;
-    position: relative;
-    width: 25px;
-    height: 2px;
-    background: var(--text-primary);
-    transition: all 0.3s ease-in-out;
-}
-.hamburger::before,
-.hamburger::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--text-primary);
-    transition: all 0.3s ease-in-out;
-}
-.hamburger::before {
-    transform: translateY(-8px);
-}
-.hamburger::after {
-    transform: translateY(8px);
-}
-.nav-toggle.active .hamburger {
-    background: transparent;
-}
-.nav-toggle.active .hamburger::before {
-    transform: rotate(45deg);
-}
-.nav-toggle.active .hamburger::after {
-    transform: rotate(-45deg);
-}
-.mobile-menu {
-    display: none;
-    flex-direction: column;
-    gap: 20px;
-    background: rgba(15, 15, 26, 0.95);
-    backdrop-filter: blur(10px);
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    padding: 20px;
-    text-align: center;
-}
-.mobile-menu.active {
-    display: flex;
-}
+
 /* =================================================== */
 /* --- PENYESUAIAN UNTUK TAMPILAN MOBILE --- */
 /* =================================================== */
 
 @media (max-width: 768px) {
   .portfolio-container {
-    padding: 100px 15px 30px; /* Kurangi padding untuk mobile */
+    padding: 100px 15px 30px;
   }
-
-  /* --- Penyesuaian Navbar --- */
+  
   .nav-menu {
-    /* Sembunyikan menu utama di mobile */
-    display: none; 
+    display: none;
   }
 
   .nav-toggle {
@@ -921,7 +807,7 @@ h2 {
   }
 
   .hero-text h1 {
-    font-size: 2.5rem; /* Perkecil ukuran font judul */
+    font-size: 2.5rem;
   }
 
   .hero-text h2 {
@@ -930,13 +816,13 @@ h2 {
 
   .hero-buttons {
     display: flex;
-    flex-direction: column; /* Tumpuk tombol secara vertikal */
-    gap: 15px; /* Beri jarak antar tombol */
+    flex-direction: column;
+    gap: 15px;
   }
 
   .btn {
     width: 100%;
-    box-sizing: border-box; /* Agar padding tidak menambah lebar */
+    box-sizing: border-box;
   }
   
   h2 {
@@ -945,7 +831,7 @@ h2 {
 
   .skills-grid,
   .competencies-grid {
-    grid-template-columns: 1fr; /* Ubah grid menjadi 1 kolom */
+    grid-template-columns: 1fr;
     gap: 15px;
   }
   
@@ -969,144 +855,5 @@ h2 {
 
   .post-content h1 {
       font-size: 2rem;
-  }
-}
-
-/* =================================================== */
-/* --- PENYESUAIAN UNTUK TAMPILAN MOBILE (DI BAWAH 768px) --- */
-/* =================================================== */
-
-@media (max-width: 768px) {
-    .competencies-grid {
-      grid-template-columns: 1fr; /* <- BARIS INI KUNCINYA */
-      max-width: 100%;
-    }
-
-    .portfolio-container {
-      padding-top: 100px;
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-
-    .hero-text h1 {
-      font-size: 2.5rem;
-    }
-
-    .hero-text h2 {
-      font-size: 1.3rem;
-    }
-    
-    .hero-buttons {
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 30px;
-    }
-
-    .btn {
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .skills-grid {
-      grid-template-columns: 1fr;
-    }
-}
-
-
-/* =================================================== */
-/* --- PERBAIKAN TAMPILAN HAMBURGER MENU --- */
-/* =================================================== */
-
-/* Penampung menu dropdown */
-.mobile-menu {
-    display: none; /* Sembunyi secara default */
-    flex-direction: column;
-    position: absolute;
-    top: 100%; /* Posisi tepat di bawah navbar */
-    left: 0;
-    width: 100%;
-    background: rgba(26, 26, 26, 0.98); /* Latar belakang lebih solid */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 15px 0; /* Padding atas-bawah */
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Tampilkan menu jika memiliki kelas .active */
-.mobile-menu.active {
-    display: flex;
-}
-
-/* Tautan di dalam menu dropdown */
-.mobile-menu .nav-link {
-    color: var(--text-primary);
-    padding: 15px 25px; /* Padding agar lebih luas dan mudah diklik */
-    text-align: center; /* Teks di tengah */
-    font-size: 1.1rem;
-    width: 100%;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease;
-}
-
-/* Efek saat tautan di-hover */
-.mobile-menu .nav-link:hover {
-    background-color: rgba(0, 191, 255, 0.1); /* Warna biru transparan */
-    color: var(--primary-color);
-}
-
-/* Ikon hamburger (tidak perlu diubah, tapi disertakan untuk kelengkapan) */
-.nav-toggle {
-    display: none; /* Hanya tampil di mobile */
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1001;
-}
-
-.hamburger {
-    display: block;
-    position: relative;
-    width: 25px;
-    height: 2px;
-    background: var(--text-primary);
-    transition: all 0.3s ease-in-out;
-}
-
-.hamburger::before,
-.hamburger::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--text-primary);
-    transition: all 0.3s ease-in-out;
-}
-
-.hamburger::before {
-    transform: translateY(-8px);
-}
-
-.hamburger::after {
-    transform: translateY(8px);
-}
-
-/* Animasi ikon hamburger menjadi 'X' */
-.nav-toggle.active .hamburger {
-    background: transparent;
-}
-.nav-toggle.active .hamburger::before {
-    transform: rotate(45deg);
-}
-.nav-toggle.active .hamburger::after {
-    transform: rotate(-45deg);
-}
-
-/* Aturan untuk menampilkan ikon hamburger di mobile */
-@media (max-width: 768px) {
-  .nav-toggle {
-      display: block;
   }
 }
