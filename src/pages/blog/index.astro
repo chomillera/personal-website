@@ -2,8 +2,23 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// Mengambil semua postingan blog dan mengurutkannya dari yang terbaru
 const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+// Pengaturan paginasi
+const postsPerPage = 10;
+const totalPages = Math.ceil(allPosts.length / postsPerPage);
+
+// Mendapatkan halaman saat ini dari URL, default ke halaman 1
+const urlParams = new URLSearchParams(Astro.url.search);
+const currentPage = parseInt(urlParams.get('page') || '1', 10);
+
+// Memotong array postingan sesuai dengan halaman saat ini
+const postsForPage = allPosts.slice(
+  (currentPage - 1) * postsPerPage,
+  currentPage * postsPerPage
 );
 ---
 <BaseLayout title="Blog">
@@ -14,14 +29,76 @@ const allPosts = (await getCollection('blog')).sort(
     </header>
 
     <section>
-      {allPosts.map(post => (
-        // ATRIBUT STYLE SUDAH DIHAPUS DARI SINI
+      {postsForPage.map(post => (
         <a href={`/blog/${post.slug}`} class="post-link-card">
           <h3 style="color:var(--primary-color); margin-top:0; font-size: 1.5rem;">{post.data.title}</h3>
-          <p style="color:var(--text-secondary); margin-bottom: 0;">By: 
+          <p style="color:var(--text-secondary); margin-bottom: 0;">By:
           {post.data.author} - {post.data.date.toLocaleDateString('en-EN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
         </a>
       ))}
     </section>
+
+    {totalPages > 1 && (
+      <nav class="pagination-nav" aria-label="Blog post pagination">
+        <ul class="pagination-list">
+          {currentPage > 1 && (
+            <li>
+              <a href={`/blog?page=${currentPage - 1}`} class="pagination-link" aria-label="Previous page">&laquo; Prev</a>
+            </li>
+          )}
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+            <li>
+              <a
+                href={`/blog?page=${page}`}
+                class:list={["pagination-link", { 'current-page': page === currentPage }]}
+                aria-current={page === currentPage ? 'page' : undefined}
+              >
+                {page}
+              </a>
+            </li>
+          ))}
+
+          {currentPage < totalPages && (
+            <li>
+              <a href={`/blog?page=${currentPage + 1}`} class="pagination-link" aria-label="Next page">Next &raquo;</a>
+            </li>
+          )}
+        </ul>
+      </nav>
+    )}
   </div>
 </BaseLayout>
+
+<style>
+  .pagination-nav {
+    margin-top: 40px;
+  }
+  .pagination-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    gap: 10px;
+  }
+  .pagination-link {
+    display: block;
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .pagination-link:hover {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-color: var(--primary-color);
+  }
+  .pagination-link.current-page {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    font-weight: bold;
+    border-color: var(--primary-color);
+  }
+</style>

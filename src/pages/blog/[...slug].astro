@@ -2,19 +2,18 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-export async function getStaticPaths() {
-  const allPosts = await getCollection('blog');
-  return allPosts.map(post => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+// Dapatkan slug dari parameter URL
+const { slug } = Astro.params;
+
+// Ambil semua postingan, lalu cari satu yang cocok dengan slug
+const allPosts = await getCollection('blog');
+const post = allPosts.find((p) => p.slug === slug);
+
+// Jika postingan tidak ditemukan, tampilkan halaman 404
+if (!post) {
+  return Astro.redirect('/404');
 }
 
-type Props = {
-    post: CollectionEntry<'blog'>;
-}
-
-const { post } = Astro.props;
 const { Content } = await post.render();
 
 // Ambil semua post, filter post yang sedang aktif, urutkan, dan batasi 3 artikel

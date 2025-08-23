@@ -1,5 +1,5 @@
 ---
-title: "Menjelajahi Era Komputasi Kuantum: Ancaman atau Peluang?"
+title: "444444444444"
 author: "Faisal Sugangga"
 date: "2025-09-10"
 image: "/blog-picture/imej_5ccfe917a8b765ccfef83b7420.webp"

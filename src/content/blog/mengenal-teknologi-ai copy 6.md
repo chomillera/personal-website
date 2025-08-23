@@ -1,7 +1,7 @@
 ---
-title: "Menjelajahi Era Komputasi Kuantum: Ancaman atau Peluang?"
+title: "555555555555"
 author: "Faisal Sugangga"
-date: "2025-09-10"
+date: "2025-09-13"
 image: "/blog-picture/imej_5ccfe917a8b765ccfef83b7420.webp"
 imageAlt: "Representasi visual dari sebuah qubit dalam superposisi"
 ---
