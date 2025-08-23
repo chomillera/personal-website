@@ -841,7 +841,66 @@ h2 {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow-color);
   border-color: var(--primary-color);
 }
-
+/* =================================================== */
+/* --- HAMBURGER MENU --- */
+/* =================================================== */
+.nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+.hamburger {
+    display: block;
+    position: relative;
+    width: 25px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s ease-in-out;
+}
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s ease-in-out;
+}
+.hamburger::before {
+    transform: translateY(-8px);
+}
+.hamburger::after {
+    transform: translateY(8px);
+}
+.nav-toggle.active .hamburger {
+    background: transparent;
+}
+.nav-toggle.active .hamburger::before {
+    transform: rotate(45deg);
+}
+.nav-toggle.active .hamburger::after {
+    transform: rotate(-45deg);
+}
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    background: rgba(15, 15, 26, 0.95);
+    backdrop-filter: blur(10px);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+.mobile-menu.active {
+    display: flex;
+}
 /* =================================================== */
 /* --- PENYESUAIAN UNTUK TAMPILAN MOBILE --- */
 /* =================================================== */
@@ -855,6 +914,10 @@ h2 {
   .nav-menu {
     /* Sembunyikan menu utama di mobile */
     display: none; 
+  }
+
+  .nav-toggle {
+      display: block;
   }
 
   .hero-text h1 {

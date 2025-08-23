@@ -94,6 +94,18 @@ function initializePageScripts() {
             });
         });
     }
+
+    // ===================================================================================
+    // BAGIAN 4: LOGIKA UNTUK MENU HAMBURGER
+    // ===================================================================================
+    const navToggle = document.querySelector('.nav-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    if (navToggle && mobileMenu) {
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+    }
 }
 
 // Jalankan fungsi saat halaman pertama kali dimuat
