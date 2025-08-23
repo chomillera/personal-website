@@ -310,7 +310,7 @@ h2 {
 .post-content h3,
 .post-content h4 {
   text-align: left;
-  margin-top: 2em;
+  margin-top: 1em;
   margin-bottom: 1em;
   color: var(--text-primary); /* Changed to primary text color (white) */
 }
@@ -320,7 +320,7 @@ h2 {
 }
 
 .post-content h3 {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 }
 
 .post-content p {
@@ -396,6 +396,12 @@ h2 {
   padding: 0;
   border: none;
   font-family: 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+.post-content hr {
+  border: none; /* Menghapus border default */
+  border-top: 1px solid var(--border-color); /* Membuat garis baru yang sesuai tema */
+  margin: 3em auto; /* Memberi jarak atas & bawah yang sama (3em) */
 }
 
 /* =================================================== */
