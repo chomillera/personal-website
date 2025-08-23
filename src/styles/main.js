@@ -5,7 +5,6 @@ function initializePageScripts() {
     // ===================================================================================
     const canvas = document.getElementById('dots-canvas');
     if (canvas) {
-        // ... (KODE PARTIKEL ANDA TETAP SAMA SEPERTI SEBELUMNYA, TIDAK PERLU DIUBAH)
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -76,7 +75,6 @@ function initializePageScripts() {
     // ===================================================================================
     const backToTopButton = document.querySelector('.back-to-top');
     if (backToTopButton) {
-        // Tampilkan tombol saat scroll melewati 300px
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 backToTopButton.classList.add('visible');
@@ -85,25 +83,12 @@ function initializePageScripts() {
             }
         });
 
-        // Fungsi smooth scroll saat tombol diklik
         backToTopButton.addEventListener('click', (e) => {
             e.preventDefault();
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
-        });
-    }
-
-    // ===================================================================================
-    // BAGIAN 4: LOGIKA UNTUK MENU HAMBURGER
-    // ===================================================================================
-    const navToggle = document.querySelector('.nav-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    if (navToggle && mobileMenu) {
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
         });
     }
 }
