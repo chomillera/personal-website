@@ -20,8 +20,11 @@ const postsForPage = allPosts.slice(
   (currentPage - 1) * postsPerPage,
   currentPage * postsPerPage
 );
+
+const pageTitle = "Blog - Faisal Sugangga";
+const pageDescription = "Kumpulan tulisan dan pemikiran dari Faisal Sugangga mengenai teknologi, manajemen proyek, strategi digital, dan pengembangan diri.";
 ---
-<BaseLayout title="Blog">
+<BaseLayout title={pageTitle} description={pageDescription}>
   <div class="portfolio-container blog-page" style="padding-top: 120px;">
     <header class="hero-section" style="margin-bottom: 60px;">
       <h1>Blog</h1>
@@ -32,8 +35,7 @@ const postsForPage = allPosts.slice(
       {postsForPage.map(post => (
         <a href={`/blog/${post.slug}`} class="post-link-card">
           <h3 style="color:var(--primary-color); margin-top:0; font-size: 1.5rem;">{post.data.title}</h3>
-          <p style="color:var(--text-secondary); margin-bottom: 0;">By:
-          {post.data.author} - {post.data.date.toLocaleDateString('en-EN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p style="color:var(--text-secondary); margin-bottom: 0;">By: {post.data.author} - {post.data.date.toLocaleDateString('en-EN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
         </a>
       ))}
     </section>

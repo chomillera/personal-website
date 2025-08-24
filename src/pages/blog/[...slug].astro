@@ -21,8 +21,12 @@ const moreArticles = (await getCollection('blog'))
   .filter(p => p.slug !== post.slug)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
+
+// Membuat deskripsi. Jika ada di frontmatter, gunakan itu. Jika tidak, ambil 160 karakter pertama dari konten.
+const pageDescription = post.data.description || post.body.replace(/#/g, '').substring(0, 160) + '...';
+const pageTitle = `${post.data.title} - Faisal Sugangga`;
 ---
-<BaseLayout title={post.data.title} hideBackgroundEffect={true}>
+<BaseLayout title={pageTitle} description={pageDescription} hideBackgroundEffect={true}>
   <div class="portfolio-container" style="padding-top: 120px;">
     <article>
       <header class="hero-section" style="margin-bottom: 0;">

@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const pageTitle = "Faisal Sugangga - Project Manager & IT Consultant";
+const pageDescription = "Menggabungkan latar belakang di bidang teknologi, strategi digital, dan hukum. Beradaptasi dengan peran teknologi cerdas untuk solusi dan pembelajaran berkelanjutan.";
 ---
-<BaseLayout title="Faisal Sugangga - Portfolio">
+<BaseLayout title={pageTitle} description={pageDescription}>
   <div class="portfolio-container" style="padding-top: 150px;">
     <header class="hero-section">
       <img
@@ -87,6 +89,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <a href="mailto:faisalsugangga@gmail.com" class="btn btn-primary">Contact Me</a>
         </div>
     </section>
-
   </div>
 </BaseLayout>
