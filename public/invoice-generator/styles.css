@@ -208,6 +208,7 @@ input[type="date"] {
     font-style: italic;
 }
 
+
 /* Items Section */
 .items-container {
     margin-bottom: 20px;
@@ -217,6 +218,7 @@ input[type="date"] {
     display: grid;
     grid-template-columns: 2fr 80px 120px 120px 40px;
     gap: 15px;
+    /* === PERUBAHAN DI SINI: align-items dari 'end' ke 'center' === */
     align-items: center;
     margin-bottom: 15px;
     padding: 20px;
@@ -237,6 +239,7 @@ input[type="date"] {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 10px;
 }
 
 .btn-remove-item:hover {
@@ -454,6 +457,28 @@ input[type="date"] {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* === PERBAIKAN HEADER MOBILE DI SINI === */
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+        padding: 1.5rem;
+    }
+    .header-left {
+        text-align: center;
+    }
+    .header-right {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .language-toggle, .currency-selector {
+        align-items: stretch;
+    }
+    .language-toggle label, .currency-selector label {
+        text-align: center;
+    }
+    /* === AKHIR PERBAIKAN HEADER === */
+
     .header h1 {
         font-size: 2rem;
     }
