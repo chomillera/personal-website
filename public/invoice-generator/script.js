@@ -1,4 +1,4 @@
-// faisalsugangga/personal-website/personal-website-c97ac8a6ed1701bf5f1fb392a5192db19ba1a110/public/invoice-generator/script.js
+// faisalsugangga/personal-website/personal-website-6363c200c36524702db5ece80c792a7dc5ac90d0/public/invoice-generator/script.js
 // Language translations
 const translations = {
     en: {
@@ -42,11 +42,13 @@ const translations = {
         invoiceNumberPlaceholder: 'INV-001',
         previewBtn: 'Preview',
         exportBtn: 'Export PDF',
-        previewPlaceholder1: 'Invoice preview will appear here',
-        previewPlaceholder2: 'Click "Preview" button to view invoice',
         free: 'FREE',
         uploadBtnText: 'Choose File',
-        noFileChosen: 'No file chosen'
+        noFileChosen: 'No file chosen',
+        donationTitle: 'Like This App?',
+        donationText: 'If this app is helpful, you can support further development with a donation. Thank you!',
+        saweriaBtnText: 'Donate via Saweria',
+        paypalBtnText: 'Donate via PayPal'
     },
     id: {
         appTitle: 'Generator Invoice',
@@ -89,11 +91,13 @@ const translations = {
         invoiceNumberPlaceholder: 'INV-001',
         previewBtn: 'Preview',
         exportBtn: 'Export PDF',
-        previewPlaceholder1: 'Preview invoice akan muncul di sini',
-        previewPlaceholder2: 'Klik tombol "Preview" untuk melihat invoice',
         free: 'GRATIS',
         uploadBtnText: 'Pilih Gambar',
-        noFileChosen: 'Tidak ada file dipilih'
+        noFileChosen: 'Tidak ada file dipilih',
+        donationTitle: 'Suka dengan Aplikasi Ini?',
+        donationText: 'Jika aplikasi ini membantu, Anda bisa mendukung pengembangan lebih lanjut melalui donasi. Terima kasih!',
+        saweriaBtnText: 'Donasi via Saweria',
+        paypalBtnText: 'Donasi via PayPal'
     }
 };
 
@@ -215,13 +219,19 @@ function updateLanguage() {
     const t = translations[currentLanguage];
     const safeUpdate = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
     
+    // Loop melalui semua kunci terjemahan
     Object.keys(t).forEach(key => {
         const elementId = key.replace(/Label|Title|Btn|Placeholder|Text|Subtitle$/, '');
         
         if (key.endsWith('Label')) {
             safeUpdate(key, 'textContent', t[key]);
         } else if (key.endsWith('Title') || key.endsWith('Btn') || key.endsWith('Subtitle') || key.endsWith('Text')) {
-            safeUpdate(elementId, 'innerHTML', t[key]);
+            // Pengecualian untuk 'donationTitle' karena ID-nya sama dengan key
+            if (key === 'donationTitle') {
+                safeUpdate(key, 'innerHTML', `<i class="fas fa-heart" style="color: #ff5e5e;"></i> ${t[key]}`);
+            } else {
+                 safeUpdate(elementId, 'innerHTML', t[key]);
+            }
         } else if (key.endsWith('Placeholder')) {
             safeUpdate(elementId, 'placeholder', t[key]);
         }
@@ -229,6 +239,12 @@ function updateLanguage() {
 
     safeUpdate('app-title', 'innerHTML', `<i class="fas fa-file-invoice"></i> ${t.appTitle}`);
     safeUpdate('upload-btn-text', 'textContent', t.uploadBtnText);
+    
+    // === PERBAIKAN DI SINI: Targetkan elemen donasi secara spesifik ===
+    safeUpdate('donationText', 'textContent', t.donationText);
+    safeUpdate('saweriaBtnText', 'textContent', t.saweriaBtnText);
+    safeUpdate('paypalBtnText', 'textContent', t.paypalBtnText);
+    // === AKHIR PERBAIKAN ===
     
     const fileNameSpan = document.getElementById('fileName');
     if (fileNameSpan && (fileNameSpan.textContent === 'No file chosen' || fileNameSpan.textContent === 'Tidak ada file dipilih')) {

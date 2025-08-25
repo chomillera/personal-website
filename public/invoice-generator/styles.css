@@ -208,7 +208,6 @@ input[type="date"] {
     font-style: italic;
 }
 
-
 /* Items Section */
 .items-container {
     margin-bottom: 20px;
@@ -218,8 +217,7 @@ input[type="date"] {
     display: grid;
     grid-template-columns: 2fr 80px 120px 120px 40px;
     gap: 15px;
-    /* === PERUBAHAN UNTUK MENYEJAJARKAN IKON === */
-    align-items: center; 
+    align-items: center;
     margin-bottom: 15px;
     padding: 20px;
     background: var(--bg-color);
@@ -389,6 +387,69 @@ input[type="date"] {
     background: #38a169;
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(72, 187, 120, 0.3);
+}
+
+/* Donation Card Styles */
+.donation-card {
+  text-align: center;
+  border: 1px solid var(--primary-color);
+  background: var(--card-bg-color);
+}
+
+.donation-card h3 i {
+  margin-right: 10px;
+}
+
+.donation-card p {
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.donation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.donation-btn {
+  text-decoration: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.donation-btn i {
+  font-size: 1.2em;
+}
+
+.donation-btn.saweria {
+  background-color: #f44336;
+}
+
+.donation-btn.saweria:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+}
+
+.donation-btn.paypal {
+  background-color: #00457C;
+}
+
+.donation-btn.paypal:hover {
+  background-color: #003057;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 69, 124, 0.4);
 }
 
 /* Responsive Design */
