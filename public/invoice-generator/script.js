@@ -1,3 +1,4 @@
+// faisalsugangga/personal-website/personal-website-0b08679541803e9d0ac2ba59b8a86377f0d0d711/public/invoice-generator/script.js
 // Language translations
 const translations = {
     en: {
@@ -104,7 +105,7 @@ let currentCurrency = 'USD';
 let companyLogo = null;
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+function initializeInvoiceGenerator() {
     // Set default dates
     const today = new Date();
     const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
@@ -137,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
         calculateItemTotal(row);
     });
     calculateTotals();
-});
+}
 
 // Add event listeners for automatic calculation
 function addCalculationListeners() {
@@ -861,3 +862,8 @@ document.addEventListener('input', function() {
     clearTimeout(window.autoSaveTimeout);
     window.autoSaveTimeout = setTimeout(autoSave, 2000);
 });
+
+
+// Make sure the script runs on initial load and after Astro's page transitions
+document.addEventListener('DOMContentLoaded', initializeInvoiceGenerator);
+document.addEventListener('astro:page-load', initializeInvoiceGenerator);
