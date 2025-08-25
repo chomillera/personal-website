@@ -1,4 +1,4 @@
-/* faisalsugangga/personal-website/personal-website-6363c200c36524702db5ece80c792a7dc5ac90d0/public/invoice-generator/styles.css */
+/* faisalsugangga/personal-website/personal-website-c97ac8a6ed1701bf5f1fb392a5192db19ba1a110/public/invoice-generator/styles.css */
 /* Reset and Base Styles */
 :root {
     --bg-color: #1a1a1a;
@@ -24,8 +24,6 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
 }
-
-/* === PERUBAHAN DI SINI: .container dihapus karena sudah tidak dipakai === */
 
 /* Header */
 .header {
@@ -220,7 +218,8 @@ input[type="date"] {
     display: grid;
     grid-template-columns: 2fr 80px 120px 120px 40px;
     gap: 15px;
-    align-items: end;
+    /* === PERUBAHAN UNTUK MENYEJAJARKAN IKON === */
+    align-items: center; 
     margin-bottom: 15px;
     padding: 20px;
     background: var(--bg-color);

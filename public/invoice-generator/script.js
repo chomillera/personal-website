@@ -1,9 +1,11 @@
-// faisalsugangga/personal-website/personal-website-6363c200c36524702db5ece80c792a7dc5ac90d0/public/invoice-generator/script.js
+// faisalsugangga/personal-website/personal-website-c97ac8a6ed1701bf5f1fb392a5192db19ba1a110/public/invoice-generator/script.js
 // Language translations
 const translations = {
     en: {
         appTitle: 'Invoice Generator',
         appSubtitle: 'Create professional invoices easily',
+        languageLabel: 'Language:',
+        currencyLabel: 'Currency:',
         companyInfoTitle: 'Company Information',
         companyNameLabel: 'Company Name',
         companyAddressLabel: 'Address',
@@ -36,7 +38,7 @@ const translations = {
         companyPhonePlaceholder: '021-1234567',
         companyEmailPlaceholder: 'info@company.com',
         clientNamePlaceholder: 'Client Name',
-        clientAddressPlaceholder: 'Jl. Example No. 123\nJakarta 12345',
+        clientAddressPlaceholder: 'Complete client address',
         invoiceNumberPlaceholder: 'INV-001',
         previewBtn: 'Preview',
         exportBtn: 'Export PDF',
@@ -49,6 +51,8 @@ const translations = {
     id: {
         appTitle: 'Generator Invoice',
         appSubtitle: 'Buat invoice profesional dengan mudah',
+        languageLabel: 'Bahasa:',
+        currencyLabel: 'Mata Uang:',
         companyInfoTitle: 'Informasi Perusahaan',
         companyNameLabel: 'Nama Perusahaan',
         companyAddressLabel: 'Alamat',
@@ -81,7 +85,7 @@ const translations = {
         companyPhonePlaceholder: '021-1234567',
         companyEmailPlaceholder: 'info@perusahaan.com',
         clientNamePlaceholder: 'Nama Klien',
-        clientAddressPlaceholder: 'Jl. Contoh No. 123\nJakarta 12345',
+        clientAddressPlaceholder: 'Alamat lengkap klien',
         invoiceNumberPlaceholder: 'INV-001',
         previewBtn: 'Preview',
         exportBtn: 'Export PDF',
@@ -211,20 +215,14 @@ function updateLanguage() {
     const t = translations[currentLanguage];
     const safeUpdate = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
     
-    // === LOGIKA DIPERBAIKI DI SINI ===
-    // Loop melalui semua kunci terjemahan
     Object.keys(t).forEach(key => {
-        // Dapatkan ID elemen dari kunci (contoh: 'companyNameLabel' -> 'companyName')
         const elementId = key.replace(/Label|Title|Btn|Placeholder|Text|Subtitle$/, '');
         
         if (key.endsWith('Label')) {
-            // Jika kunci adalah untuk label, targetkan elemen dengan ID yang persis sama dengan kunci
             safeUpdate(key, 'textContent', t[key]);
         } else if (key.endsWith('Title') || key.endsWith('Btn') || key.endsWith('Subtitle') || key.endsWith('Text')) {
-            // Untuk judul, tombol, dll, targetkan ID yang sudah di-trim
             safeUpdate(elementId, 'innerHTML', t[key]);
         } else if (key.endsWith('Placeholder')) {
-            // Untuk placeholder, targetkan ID yang sudah di-trim
             safeUpdate(elementId, 'placeholder', t[key]);
         }
     });
