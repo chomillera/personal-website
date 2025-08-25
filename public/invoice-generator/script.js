@@ -215,43 +215,82 @@ function changeLanguage() {
     calculateTotals();
 }
 
+// === FUNGSI DIPERBARUI DI SINI ===
 function updateLanguage() {
     const t = translations[currentLanguage];
     const safeUpdate = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
-    
-    // Loop melalui semua kunci terjemahan
-    Object.keys(t).forEach(key => {
-        const elementId = key.replace(/Label|Title|Btn|Placeholder|Text|Subtitle$/, '');
-        
-        if (key.endsWith('Label')) {
-            safeUpdate(key, 'textContent', t[key]);
-        } else if (key.endsWith('Title') || key.endsWith('Btn') || key.endsWith('Subtitle') || key.endsWith('Text')) {
-            // Pengecualian untuk 'donationTitle' karena ID-nya sama dengan key
-            if (key === 'donationTitle') {
-                safeUpdate(key, 'innerHTML', `<i class="fas fa-heart" style="color: #ff5e5e;"></i> ${t[key]}`);
-            } else {
-                 safeUpdate(elementId, 'innerHTML', t[key]);
-            }
-        } else if (key.endsWith('Placeholder')) {
-            safeUpdate(elementId, 'placeholder', t[key]);
-        }
-    });
 
+    // Header
     safeUpdate('app-title', 'innerHTML', `<i class="fas fa-file-invoice"></i> ${t.appTitle}`);
-    safeUpdate('upload-btn-text', 'textContent', t.uploadBtnText);
+    safeUpdate('app-subtitle', 'textContent', t.appSubtitle);
+    safeUpdate('languageLabel', 'textContent', t.languageLabel);
+    safeUpdate('currencyLabel', 'textContent', t.currencyLabel);
+
+    // Card Titles
+    safeUpdate('companyInfoTitle', 'innerHTML', `<i class="fas fa-building"></i> ${t.companyInfoTitle}`);
+    safeUpdate('clientInfoTitle', 'innerHTML', `<i class="fas fa-user"></i> ${t.clientInfoTitle}`);
+    safeUpdate('itemsTitle', 'innerHTML', `<i class="fas fa-list"></i> ${t.itemsTitle}`);
+    safeUpdate('totalSectionTitle', 'innerHTML', `<i class="fas fa-calculator"></i> ${t.totalSectionTitle}`);
+    safeUpdate('paymentInfoTitle', 'textContent', t.paymentInfoTitle);
+
+    // Labels
+    safeUpdate('companyLogoLabel', 'textContent', t.companyLogoLabel);
+    safeUpdate('companyNameLabel', 'textContent', t.companyNameLabel);
+    safeUpdate('companyAddressLabel', 'textContent', t.companyAddressLabel);
+    safeUpdate('companyPhoneLabel', 'textContent', t.companyPhoneLabel);
+    safeUpdate('companyEmailLabel', 'textContent', t.companyEmailLabel);
+    safeUpdate('clientNameLabel', 'textContent', t.clientNameLabel);
+    safeUpdate('clientAddressLabel', 'textContent', t.clientAddressLabel);
+    safeUpdate('invoiceNumberLabel', 'textContent', t.invoiceNumberLabel);
+    safeUpdate('invoiceDateLabel', 'textContent', t.invoiceDateLabel);
+    safeUpdate('dueDateLabel', 'textContent', t.dueDateLabel);
+    safeUpdate('subtotalLabel', 'textContent', t.subtotalLabel);
+    safeUpdate('taxRateLabel', 'textContent', t.taxRateLabel);
+    safeUpdate('totalFinalLabel', 'textContent', t.totalFinalLabel);
+    safeUpdate('paymentMethodLabel', 'textContent', t.paymentMethodLabel);
+
+    // Placeholders
+    safeUpdate('companyName', 'placeholder', t.companyNamePlaceholder);
+    safeUpdate('companyAddress', 'placeholder', t.companyAddressPlaceholder);
+    safeUpdate('companyPhone', 'placeholder', t.companyPhonePlaceholder);
+    safeUpdate('companyEmail', 'placeholder', t.companyEmailPlaceholder);
+    safeUpdate('clientName', 'placeholder', t.clientNamePlaceholder);
+    safeUpdate('clientAddress', 'placeholder', t.clientAddressPlaceholder);
+    safeUpdate('invoiceNumber', 'placeholder', t.invoiceNumberPlaceholder);
+    safeUpdate('paymentMethod', 'placeholder', t.paymentMethodPlaceholder);
+
+    // Buttons and other text
+    safeUpdate('uploadBtnText', 'textContent', t.uploadBtnText);
+    safeUpdate('addItemBtn', 'innerHTML', `<i class="fas fa-plus"></i> ${t.addItemBtn}`);
+    safeUpdate('previewBtn', 'innerHTML', `<i class="fas fa-eye"></i> ${t.previewBtn}`);
+    safeUpdate('exportBtn', 'innerHTML', `<i class="fas fa-download"></i> ${t.exportBtn}`);
     
-    // === PERBAIKAN DI SINI: Targetkan elemen donasi secara spesifik ===
+    // Donation Card
+    safeUpdate('donationTitle', 'innerHTML', `<i class="fas fa-heart" style="color: #ff5e5e;"></i> ${t.donationTitle}`);
     safeUpdate('donationText', 'textContent', t.donationText);
     safeUpdate('saweriaBtnText', 'textContent', t.saweriaBtnText);
     safeUpdate('paypalBtnText', 'textContent', t.paypalBtnText);
-    // === AKHIR PERBAIKAN ===
     
+    // Fallback text for file name
     const fileNameSpan = document.getElementById('fileName');
     if (fileNameSpan && (fileNameSpan.textContent === 'No file chosen' || fileNameSpan.textContent === 'Tidak ada file dipilih')) {
         fileNameSpan.textContent = t.noFileChosen;
     }
     
-    document.querySelectorAll('.item-description').forEach(input => input.placeholder = t.descriptionPlaceholder);
+    // Item row labels & placeholders (for existing and new items)
+    document.querySelectorAll('.item-row').forEach(row => {
+        const descLabel = row.querySelector('label[id^="description-label"]');
+        if (descLabel) descLabel.textContent = t.descriptionLabel;
+        const qtyLabel = row.querySelector('label[id^="qty-label"]');
+        if (qtyLabel) qtyLabel.textContent = t.qtyLabel;
+        const priceLabel = row.querySelector('label[id^="price-label"]');
+        if (priceLabel) priceLabel.textContent = t.priceLabel;
+        const totalLabel = row.querySelector('label[id^="total-label"]');
+        if (totalLabel) totalLabel.textContent = t.totalLabel;
+        
+        const descInput = row.querySelector('.item-description');
+        if(descInput) descInput.placeholder = t.descriptionPlaceholder;
+    });
 }
 
 
