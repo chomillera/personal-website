@@ -1,3 +1,4 @@
+/* faisalsugangga/personal-website/personal-website-6363c200c36524702db5ece80c792a7dc5ac90d0/public/invoice-generator/styles.css */
 /* Reset and Base Styles */
 :root {
     --bg-color: #1a1a1a;
@@ -24,11 +25,7 @@ body {
     line-height: 1.6;
 }
 
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
-}
+/* === PERUBAHAN DI SINI: .container dihapus karena sudah tidak dipakai === */
 
 /* Header */
 .header {
@@ -96,10 +93,7 @@ body {
 
 /* Main Content Layout */
 .main-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    align-items: start;
+    display: flex;
 }
 
 /* Form Section */
@@ -107,6 +101,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 25px;
+    width: 100%;
 }
 
 .form-card {
@@ -178,6 +173,43 @@ textarea {
     resize: vertical;
     min-height: 80px;
 }
+
+input[type="date"] {
+    color-scheme: dark;
+}
+
+/* Custom File Upload Button */
+.file-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 8px;
+}
+.file-upload-input {
+    display: none;
+}
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background: var(--primary-color);
+    color: #1a1a1a;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--primary-color);
+}
+.file-upload-label:hover {
+    background: transparent;
+    color: var(--primary-color);
+}
+.file-name {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
 
 /* Items Section */
 .items-container {
@@ -280,7 +312,7 @@ textarea {
 }
 
 .logo-preview {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     max-width: 200px;
     max-height: 100px;
     border: 2px dashed var(--border-color);
@@ -360,155 +392,8 @@ textarea {
     box-shadow: 0 8px 20px rgba(72, 187, 120, 0.3);
 }
 
-/* Preview Section */
-.preview-section {
-    position: sticky;
-    top: 20px;
-}
-
-.invoice-preview {
-    background: white;
-    border-radius: 16px;
-    min-height: 600px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    overflow: auto;
-    color: #2d3748;
-}
-
-.preview-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 600px;
-    color: #a0aec0;
-    text-align: center;
-}
-
-.preview-placeholder i {
-    margin-bottom: 20px;
-    opacity: 0.5;
-}
-
-.preview-placeholder p {
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-}
-
-/* Invoice Preview Styles */
-.invoice-content {
-    padding: 40px;
-    font-family: 'Poppins', sans-serif;
-}
-
-.invoice-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 3px solid var(--primary-color);
-}
-
-.company-info h3 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 10px;
-}
-
-.company-info p {
-    color: #4a5568;
-    margin-bottom: 5px;
-}
-
-.invoice-meta {
-    text-align: right;
-}
-
-.invoice-meta h2 {
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-}
-
-.invoice-meta p {
-    margin-bottom: 5px;
-    color: #4a5568;
-}
-
-.client-info {
-    margin-bottom: 30px;
-    padding: 20px;
-    background: #f8fafc;
-    border-radius: 8px;
-    border-left: 4px solid var(--primary-color);
-}
-
-.client-info h4 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #2d3748;
-}
-
-.invoice-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-}
-
-.invoice-table th {
-    background: var(--primary-color);
-    color: white;
-    padding: 15px;
-    text-align: left;
-    font-weight: 600;
-}
-
-.invoice-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.invoice-table tr:nth-child(even) {
-    background: #f8fafc;
-}
-
-.invoice-totals {
-    margin-left: auto;
-    width: 300px;
-}
-
-.invoice-totals .total-row {
-    padding: 8px 0;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.invoice-totals .total-final {
-    background: var(--primary-color);
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
 /* Responsive Design */
-@media (max-width: 1200px) {
-    .main-content {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .preview-section {
-        position: static;
-    }
-}
-
 @media (max-width: 768px) {
-    .container {
-        padding: 15px;
-    }
-    
     .header h1 {
         font-size: 2rem;
     }
@@ -528,14 +413,5 @@ textarea {
     
     .btn-preview, .btn-export {
         width: 100%;
-    }
-    
-    .invoice-header {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .invoice-meta {
-        text-align: left;
     }
 }
