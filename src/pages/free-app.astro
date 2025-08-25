@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const pageTitle = "Aplikasi Gratis - Faisal Sugangga";
+const pageDescription = "Kumpulan aplikasi gratis yang dibuat oleh Faisal Sugangga.";
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <div class="portfolio-container" style="padding-top: 120px;">
+    <header class="hero-section" style="margin-bottom: 60px;">
+      <h1>Aplikasi Gratis</h1>
+      <p class="summary">Berikut adalah beberapa aplikasi gratis yang saya buat untuk membantu Anda.</p>
+    </header>
+
+    <section class="apps-grid">
+      <a href="/free-app/invoice-generator" class="app-card">
+        <div class="app-card-content">
+          <h3>Invoice Generator</h3>
+          <p>Buat invoice profesional dengan mudah dan cepat.</p>
+        </div>
+      </a>
+      </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+  }
+
+  .app-card {
+    display: block;
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: var(--card-shadow);
+  }
+
+  .app-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow-color);
+    border-color: var(--primary-color);
+  }
+
+  .app-card h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  .app-card p {
+    color: var(--text-secondary);
+    margin-bottom: 0;
+  }
+</style>

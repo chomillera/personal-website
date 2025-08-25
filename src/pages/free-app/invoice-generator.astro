@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const pageTitle = "Invoice Generator - Faisal Sugangga";
+const pageDescription = "Buat invoice profesional dengan mudah menggunakan aplikasi gratis ini.";
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+
+  <Fragment slot="head-end">
+    <link rel="stylesheet" href="/invoice-generator/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  </Fragment>
+
+  <div class="container" style="padding-top: 120px;">
+    <header class="header">
+        <div class="header-left">
+            <h1 id="app-title"><i class="fas fa-file-invoice"></i> Invoice Generator</h1>
+            <p id="app-subtitle">Buat invoice profesional dengan mudah</p>
+        </div>
+        <div class="header-right">
+            <div class="language-toggle">
+                <label for="language">Language:</label>
+                <select id="language">
+                    <option value="en">English</option>
+                    <option value="id">Bahasa Indonesia</option>
+                </select>
+            </div>
+            <div class="currency-selector">
+                <label for="currency">Currency:</label>
+                <select id="currency">
+                    <option value="USD">USD ($)</option>
+                    <option value="IDR">IDR (Rp)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="JPY">JPY (¥)</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="form-section">
+            <div class="form-card">
+                <h2 id="company-info-title"><i class="fas fa-building"></i> Informasi Perusahaan</h2>
+                <div class="form-group">
+                    <label for="companyLogo" id="company-logo-label">Logo Perusahaan:</label>
+                    <input type="file" id="companyLogo" accept="image/*">
+                    <div id="logoPreview" class="logo-preview"></div>
+                </div>
+                <div class="form-group">
+                    <label for="companyName" id="company-name-label">Nama Perusahaan</label>
+                    <input type="text" id="companyName" placeholder="PT. Contoh Perusahaan">
+                </div>
+                <div class="form-group">
+                    <label for="companyAddress" id="company-address-label">Alamat</label>
+                    <textarea id="companyAddress" rows="3" placeholder="Jl. Contoh No. 123\nJakarta 12345"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyPhone" id="company-phone-label">Telepon</label>
+                        <input type="tel" id="companyPhone" placeholder="021-1234567">
+                    </div>
+                    <div class="form-group">
+                        <label for="companyEmail" id="company-email-label">Email</label>
+                        <input type="email" id="companyEmail" placeholder="info@perusahaan.com">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h2 id="client-info-title"><i class="fas fa-user"></i> Informasi Klien</h2>
+                <div class="form-group">
+                    <label for="clientName" id="client-name-label">Nama Klien</label>
+                    <input type="text" id="clientName" placeholder="Nama Klien">
+                </div>
+                <div class="form-group">
+                    <label for="clientAddress" id="client-address-label">Alamat Klien</label>
+                    <textarea id="clientAddress" rows="3" placeholder="Alamat lengkap klien"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="invoiceNumber" id="invoice-number-label">No. Invoice</label>
+                        <input type="text" id="invoiceNumber" placeholder="INV-001">
+                    </div>
+                    <div class="form-group">
+                        <label for="invoiceDate" id="invoice-date-label">Tanggal</label>
+                        <input type="date" id="invoiceDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate" id="due-date-label">Jatuh Tempo</label>
+                        <input type="date" id="dueDate">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h2 id="items-title"><i class="fas fa-list"></i> Item Invoice</h2>
+                <div class="items-container" id="itemsContainer">
+                    <div class="item-row">
+                        <div class="form-group">
+                            <label id="description-label">Deskripsi</label>
+                            <input type="text" class="item-description" placeholder="Deskripsi item">
+                        </div>
+                        <div class="form-group">
+                            <label id="qty-label">Qty</label>
+                            <input type="number" class="item-quantity" placeholder="1" min="0" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label id="price-label">Harga</label>
+                            <input type="number" class="item-price" placeholder="0" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label id="total-label">Total</label>
+                            <input type="text" class="item-total" readonly>
+                        </div>
+                        <button type="button" class="btn-remove-item" onclick="removeItem(this)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="button" class="btn-add-item" id="addItemBtn" onclick="addItem()">
+                    <i class="fas fa-plus"></i> Tambah Item
+                </button>
+            </div>
+
+            <div class="form-card">
+                <h2 id="total-section-title"><i class="fas fa-calculator"></i> Total</h2>
+                <div class="total-section">
+                    <div class="total-row">
+                        <span id="subtotal-label">Subtotal:</span>
+                        <span id="subtotal">Rp 0</span>
+                    </div>
+                    <div class="tax-input-row">
+                        <div class="tax-input-group">
+                            <label for="taxRate" id="tax-rate-label">Pajak (%):</label>
+                            <input type="number" id="taxRate" value="11" min="0" max="100" step="0.1">
+                        </div>
+                        <span id="tax">Rp 0</span>
+                    </div>
+                    <div class="total-row total-final">
+                        <span id="total-final-label">Total:</span>
+                        <span id="grandTotal">Rp 0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h3 id="payment-info-title">Informasi Pembayaran</h3>
+                <div class="form-group">
+                    <label for="paymentMethod" id="payment-method-label">Metode Pembayaran:</label>
+                    <textarea id="paymentMethod" placeholder="Transfer Bank ke:\nNama Rekening: Perusahaan Anda\nNo. Rekening: 1234567890\nBank: Nama Bank Anda"></textarea>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" class="btn-preview" id="previewBtn" onclick="generatePreview()">
+                    <i class="fas fa-eye"></i> Preview
+                </button>
+                <button type="button" class="btn-export" id="exportBtn" onclick="exportToPDF()">
+                    <i class="fas fa-download"></i> Export PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="preview-section">
+            <div class="invoice-preview" id="invoicePreview">
+                <div class="preview-placeholder">
+                    <i class="fas fa-file-invoice fa-3x"></i>
+                    <p id="preview-placeholder-1">Preview invoice akan muncul di sini</p>
+                    <p id="preview-placeholder-2">Klik tombol "Preview" untuk melihat invoice</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script is:inline src="/invoice-generator/script.js"></script>
+</BaseLayout>
